@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>login</title>
+    <link rel='stylesheet prefetch' href='./static/assets/css/bootstrap.min.css'>
+	<link rel='stylesheet prefetch' href='./static/assets/css/login.css'>
+	<script src="./static/assets/js/jquery.min.js"></script>
+	<script src="./static/assets/js/underscore-min.js"></script> 
+</head>
+<body>
+    <div class="login-reg-panel">
+		<div class="login-info-box">
+			<h2>Have an account?</h2>
+			<p>Lorem ipsum dolor sit amet</p>
+			<label id="label-register" for="log-reg-show">Login</label>
+		</div>
+							
+		<div class="register-info-box">
+			<h2>Don't have an account?</h2>
+			<p>Lorem ipsum dolor sit amet</p>
+		</div>
+							
+		<div class="white-panel">
+			<div class="login-show">
+				<h2>LOGIN</h2>
+				<input type="text" placeholder="Email" id="email">
+				<input type="password" placeholder="Password" id="password">
+				<input type="button" value="Login" id="login">
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function(){
+			$('#login').click(()=>{
+				var email = $('#email').val();
+				var password = $('#password').val();
+				if(_.isEmpty(email)) {
+					$('#email').addClass('error');
+				}
+				if(_.isEmpty(password)) {
+					$('#password').addClass('error');
+				}
+
+				//submition
+
+				if(!_.isEmpty(email) && !_.isEmpty(password)) {
+					$.ajax({url:'/checkdetails', method:'POST', data:{email:email,password:password}, success:(result) => {
+						if(result.code == '200') {
+							localStorage.setItem('activeUser', JSON.stringify(result.data));
+							window.location.href = '/';
+						} else {
+							window.location.reload();
+						}
+					},error:(error)=>{
+						console.log(error);
+					}});
+				}
+			});
+		});
+	</script>
+</body>
+</html>
