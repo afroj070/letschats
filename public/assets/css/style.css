@@ -7,7 +7,6 @@ body {
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
     -webkit-font-smoothing: antialiased;
 }
-
 #frame {
   width: 100%;
   min-width: 360px;
@@ -39,8 +38,8 @@ body {
   }
 }
 #frame #sidepanel #profile {
-  width: 80%;
-  margin: 25px auto;
+  width: 90%;
+  margin: 5px auto;
 }
 @media screen and (max-width: 735px) {
   #frame #sidepanel #profile {
@@ -124,6 +123,7 @@ body {
   margin-top: 23px;
   font-size: 0.8em;
   cursor: pointer;
+  margin-left: 10px;
   color: #435f7a;
 }
 @media screen and (max-width: 735px) {
@@ -714,4 +714,31 @@ body {
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
+}
+
+/* custom styls */
+
+.error{
+  border:1px solid red!important;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  margin-top: 35px;
+  margin-right: 10px;
+  background-color: #f9f9f9;
+  min-width: 130px;
+  box-shadow: 1px 2px 6px 0px rgb(230, 234, 234);
+  z-index: 1;
+}
+.dropdown-content a {
+  color: black;
+  text-decoration: none;
+  display: block;
+  padding: 1px 0px 0px 1px;
+  text-align: center;
+}
+.dropdown_profile:hover .dropdown-content {
+  display: block;
 }

@@ -122,3 +122,30 @@ app.get('/getchat/:recieverId',(req, res) => {
         res.send({users:results[0], chats:results[1]});
     });
 });
+
+// add contacts
+var query = "insert into users set ?";
+var SelectQuery = "Select *from users where email = ?";
+app.post('/addContact',(req, res) => {
+  connection.query(SelectQuery,[req.body.email], (error, results, fields)=>{
+    if(error){
+      res.send({status:400, data:error});
+    }
+    if(!_.isEmpty(results)) {
+      res.send({status:302, data:results});     
+    } else {
+      connection.query(query,  req.body, (error, results, fields)=>{
+        if (error) {
+          res.send({status:400, data:error});
+        }
+        res.send({status:200, data:results});
+      });
+    }
+  });
+ 
+});
+
+//logout 
+app.get('/logout', (req, res)=>{
+  res.clearCookie('activeUser');
+});

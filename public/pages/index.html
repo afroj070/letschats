@@ -1,15 +1,16 @@
 <!DOCTYPE html><html class=''>
-	<head>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-    <link rel="canonical" href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&page=74&q=contact+" />
-    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
+	<head>		
+    	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
 		
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 		<link rel='stylesheet' href='./static/assets/css/bootstrap.min.css'>
 		<link rel='stylesheet' href='./static/assets/css/style.css'>
+		<link rel='stylesheet' href='./static/assets/css/toastr.css'>
 		<script src="./static/assets/js/jquery.min.js"></script>
 		<script src="./static/assets/js/bootstrap.min.js"></script>
 		<script src="./static/assets/js/underscore-min.js"></script> 
+		<script src="./static/assets/js/toastr.js"></script> 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 		
 </head>
@@ -35,14 +36,10 @@
 </div>
 
 <div id="addContact" class="sidenav">
-	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	<a href="javascript:void(0)" class="closebtn">&times;</a>
 	<div class="container">
-		<form action="">
-			<div class="form-group">
-			  <label for="email">Profile</label>
-			  <input type="file" class="form-control" id="email" placeholder="Enter email" name="email">
-			</div>
-
+			<h2>Add New Contact </h2>
+			<hr>
 			<div class="form-group">
 				<label for="email">Full Name</label>
 				<input type="text" class="form-control" id="fullname" placeholder="Full Name" name="fullname">
@@ -53,21 +50,42 @@
 			</div>
 			<div class="form-group">
 				<label for="email">Password</label>
-				<input type="text" class="form-control" id="email" placeholder="Password" name="email">
+				<input type="text" class="form-control" id="password" placeholder="Password" name="password">
 			</div>
 			<div class="form-group">
 				<label for="email">Confirm-password</label>
-				<input type="text" class="form-control" id="email" placeholder="Confirm-password" name="email">
+				<input type="text" class="form-control" id="confirm-password" placeholder="Confirm-password" name="email">
 			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
+			<button type="submit" class="btn btn-primary"  id='addContactBtn'>Submit</button>
 	</div>
 </div>
 
+<!-- update profile -->
+<div id="updateProfile-wrapper" class="sidenav">
+	<a href="javascript:void(0)" class="closebtn">&times;</a>
+	<div class="container">
+			<div class="form-group">
+				<label for="email">Full Name</label>
+				<input type="text" class="form-control" id="fullname" placeholder="Full Name" name="fullname">
+			</div>
+			<div class="form-group">
+				<label for="email">Email</label>
+				<input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+			</div>
+			<div class="form-group">
+				<label for="email">Password</label>
+				<input type="text" class="form-control" id="password" placeholder="Password" name="password">
+			</div>
+			<div class="form-group">
+				<label for="email">Confirm-password</label>
+				<input type="text" class="form-control" id="confirm-password" placeholder="Confirm-password" name="email">
+			</div>
+			<button type="submit" class="btn btn-primary"  id='updateProfileBtn'>Submit</button>
+	</div>
+</div>
 <div id="settings_wrapper" class="sidenav">
-		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<div class="container">
-			<form action="">				
+		<a href="javascript:void(0)" class="closebtn">&times;</a>
+		<div class="container">				
 				<div class="form-group">
 					<label for="email">Email</label>
 					<input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
@@ -77,30 +95,14 @@
 					<input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
 				</div>
 				<button type="submit" class="btn btn-primary">Submit</button>
-			</form>
 		</div>
 </div>
 <script id="user-profile" type="text/template">
 	<div class="wrap">
 		<img id="profile-img" src="./static/assets/images/avatar.jpg" class="online" alt="" />
 		<p><%= activeUser.name %></p>
-		<i class="fa fa-power-off expand-button" aria-hidden="true"></i>
-		<div id="status-options">
-			<ul>
-				<li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
-				<li id="status-away"><span class="status-circle"></span> <p>Away</p></li>
-				<li id="status-busy"><span class="status-circle"></span> <p>Busy</p></li>
-				<li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>
-			</ul>
-		</div>
-		<div id="expanded">
-			<label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
-			<input name="twitter" type="text" value="mikeross" />
-			<label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
-			<input name="twitter" type="text" value="ross81" />
-			<label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
-			<input name="twitter" type="text" value="mike.ross" />
-		</div>
+		<i class="far fa-edit expand-button" id='updateProfile'></i>
+		<i class="fas fa-sign-out-alt expand-button" id='logout'></i>		
 	</div>
 </script>
 <script id='contact-lists' type="text/template" >
@@ -161,10 +163,7 @@
 		var activeUser = JSON.parse(localStorage.getItem('activeUser'));
 
 
-		$.ajax({url: "/getAllUsers", method:'GET', success: function(result) {
-			$('#profile').html(userProfileTemplate({activeUser:activeUser}));
-			$('#contacts').html(contactListsTemplate({users:result.users}))
-		}});
+		
 
 		// add contacts 
 		$('#addcontact').click(()=>{
@@ -173,6 +172,40 @@
 		$('.closebtn').click(()=>{
 			$("#addContact").width('0px');
 			$('#settings_wrapper').width('0px');
+		});
+
+		$('#addContactBtn').click(()=>{
+				var contactData = {
+					name: $('#fullname').val(),
+					email: $('#email').val(),
+					password: $('#password').val(),
+					active: 1
+				};
+
+				if(!_.isEmpty($('#fullname').val()) && !_.isEmpty($('#email').val()) && !_.isEmpty($('#password').val()))
+				{
+					$.ajax({url:'/addContact', method: 'POST', data: contactData,  success: (response) => {
+						if(response.status == 200 ) {
+							getAllUsers();
+							$('#fullname').val('');
+							$('#email').val('');
+							$('#password').val('');
+							$('#confirm-password').val('');
+							toastr.success("Recourd Saved.");
+							$('.closebtn').trigger('click');
+	
+						} 
+						
+						if(response.status == 302) {
+							$('#email').addClass('error');						
+							toastr.warning("Email Already exist !. please try another email.");
+						}
+					}});
+				} else {
+					toastr.error('Please fill all required fields.');
+				}
+
+				
 		});
 		// settings 
 		$('#settings').click(()=>{
@@ -194,6 +227,23 @@
 
 		});
 		
+
+		// update profile
+		$('body').on('click', '#updateProfile', ()=>{
+			$("#updateProfile-wrapper").width('340px');
+		});
+
+		$('body').on('click', '.closebtn', ()=>{
+			$("#updateProfile-wrapper").width('0px');
+		});
+
+		// logout 
+		$('body').on('click', '#logout', ()=>{
+			localStorage.clear();
+			$.ajax({url:'/logout',success:(resp) => {
+				location.reload();
+			}})
+		});
 		// socket io
 		var socket = io();
 
@@ -217,6 +267,15 @@
 			}
 		
 		});
+
+		getAllUsers();
+		function getAllUsers() {
+			$.ajax({url: "/getAllUsers", method:'GET', success: function(result) {
+				$('#profile').html(userProfileTemplate({activeUser:activeUser}));
+				$('#contacts').html(contactListsTemplate({users:result.users}))
+			}});
+		}
+
 	});
 </script>
 </body></html>
